@@ -20,6 +20,11 @@ const userSchema = new mongoose.Schema({
     isVerified: {
         type: Boolean,
         default: false
+    },
+    role: {
+        type: String,
+        enum: ["user", "admin"],
+        default: "user"
     }
 }, {
     timestamps: true
@@ -40,7 +45,7 @@ userSchema.methods.comparePassword = async function(candidate) {
 userSchema.methods.sendVerificationLink = function() {
     const token = jwt.sign({ userId: this._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES });
 
-    const link = `http://localhost:3000/api/auth/verify-account?token=${token}`;
+    const link = `${process.env.SERVER_URL}/api/auth/verify-email?token=${token}`;
 
     const html = `
         <h1>Verification Link</h1>

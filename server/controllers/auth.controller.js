@@ -82,7 +82,7 @@ const signout = catchAsync(async (req, res, next) => {
 });
 
 // Controller to verify user email
-const verify = catchAsync(async (req, res, next) => {
+const verifyEmail = catchAsync(async (req, res, next) => {
     const { token } = req.query;
 
     const payload = await jwt.verify(token, process.env.JWT_SECRET);
@@ -97,6 +97,10 @@ const verify = catchAsync(async (req, res, next) => {
         return next(new AppError("User not found!", 404));
     }
 
+    if(user.isVerified) {
+        return next(new AppError("User email is already verified!", 400));
+    }
+
     user.isVerified = true;
 
     await user.save();
@@ -104,4 +108,4 @@ const verify = catchAsync(async (req, res, next) => {
     res.status(200).send("<h1>Email successfully verified, you can go back!</h1>");
 });
 
-module.exports = { signup, signin, signout, verify };
+module.exports = { signup, signin, signout, verifyEmail };
