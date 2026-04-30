@@ -38,9 +38,11 @@ const signup = catchAsync(async (req, res, next) => {
 
     const user = await User.create({fullname, email, password});
 
+    await user.sendVerificationLink();
+
     res.status(201).json({
         status: "success",
-        message: "Accoutn created succesfully!"
+        message: "Account created succesfully!"
     });
 });
 
@@ -63,6 +65,10 @@ const signin = catchAsync(async (req, res, next) => {
         return next(new AppError("Credentials is incorrect!", 400));
     }
 
+    if (!user.isVerified) {
+        return next(new AppError("Verify your email first!", 400));
+    }
+
     createSendToken(user, res, 200);
 });
 
@@ -75,4 +81,27 @@ const signout = catchAsync(async (req, res, next) => {
     });
 });
 
-module.exports = { signup, signin, signout };
+// Controller to verify user email
+const verify = catchAsync(async (req, res, next) => {
+    const { token } = req.query;
+
+    const payload = await jwt.verify(token, process.env.JWT_SECRET);
+
+    if (!payload) {
+        return next(new AppError("We cant identify you!", 400));
+    }
+
+    const user = await User.findById(payload.userId);
+
+    if (!user) {
+        return next(new AppError("User not found!", 404));
+    }
+
+    user.isVerified = true;
+
+    await user.save();
+
+    res.status(200).send("<h1>Email successfully verified, you can go back!</h1>");
+});
+
+module.exports = { signup, signin, signout, verify };
