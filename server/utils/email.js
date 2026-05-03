@@ -1,25 +1,25 @@
-const nodemailer = require("nodemailer");
-const dotenv = require("dotenv");
+const nodemailer = require('nodemailer')
 
-dotenv.config();
+const transported = nodemailer.createTransport({
+  host: "sandbox.smtp.mailtrap.io",
+  port: 587,
+  secure: false,
+  auth:{
+    user: "55c7bde70f9beb",
+    pass: "5dead5bcd8ccd1"
+  }
+})
 
-// Create transporter
-const transporter = nodemailer.createTransport({
-    host: "sandbox.smtp.mailtrap.io",
-    port: 2525,
-    auth: {
-        user: process.env.USER_EMAIL,
-        pass: process.env.USER_PASS
-    }
-});
-
-// Create function to send verification link in user email
-const sendMail = (to, subject, html) => {
-    transporter.sendMail({
-        to,
-        subject,
-        html
-    })
+const sendMail = async (to, subject, text) => {
+  try {
+    await transported.sendMail({
+      from: '"My App" <support@sandbox.mailtrap.io>',
+      to,
+      subject,
+      text
+    });
+  } catch (error) {
+    console.log("Email error:", error); 
+  }
 };
-
 module.exports = sendMail;

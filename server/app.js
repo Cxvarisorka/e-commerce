@@ -4,6 +4,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const Sentry = require("@sentry/node");
 const cookieParser = require('cookie-parser');
+const morgan = require('morgan')
 
 // Our modules
 
@@ -13,9 +14,11 @@ const connectDB = require('./config/db.config');
 // Controllers
 const globalErrorHandler = require('./controllers/error.controller');
 
+
 // Routers
 const authRouter = require('./routers/auth.router');
-
+const productRouter = require('./routers/product.router');
+const categoryRouter = require('./routers/category.router');
 // ----------------------------------------------------------------------------------------
 
 // Sentry init
@@ -38,6 +41,7 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(morgan('dev'))
 
 // Error handler
 Sentry.setupExpressErrorHandler(app);
@@ -52,6 +56,8 @@ app.get('/health', (req, res) => {
 
 // Routers
 app.use('/api/auth', authRouter);
+app.use('/api/category', categoryRouter);
+app.use('/api/product', productRouter);
 
 // Error handler
 app.use(globalErrorHandler);
@@ -63,3 +69,5 @@ connectDB();
 app.listen(process.env.PORT, () => {
     console.log("Server is listening for requests!");
 });
+
+
