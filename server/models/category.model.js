@@ -10,27 +10,25 @@ const categorySchema = new mongoose.Schema({
         type: String,
         required: [true, "Description is required!"]
     },
-    image: {
-        src: {
-            type: String,
-            required: [true, "Image SRC is required!"]
-        },
-        alt: {
-            type: String,
-            required: [true, "Image alt is required!"]
-        }
-    },
+    // image: {
+    //     src: {
+    //         type: String,
+    //         required: [true, "Image SRC is required!"]
+    //     },
+    //     alt: {
+    //         type: String,
+    //         required: [true, "Image alt is required!"]
+    //     }
+    // },
     parentCategory: {
-        type: String,
-        required: [true, "Parent category is required!"]
+        type: String
     },
     isActive: {
         type: Boolean,
         default: true
     },
     allowedAttributes: {
-        type: [String],
-        required: [true, "Allowed attributes is required!"]
+        type: [String]
     }
 }, { timestamps: true });
 

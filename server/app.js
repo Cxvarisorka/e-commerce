@@ -15,6 +15,8 @@ const globalErrorHandler = require('./controllers/error.controller');
 
 // Routers
 const authRouter = require('./routers/auth.router');
+const categoryRouter = require('./routers/category.router');
+const productRouter = require('./routers/product.router');
 
 // ----------------------------------------------------------------------------------------
 
@@ -52,6 +54,8 @@ app.get('/health', (req, res) => {
 
 // Routers
 app.use('/api/auth', authRouter);
+app.use('/api/category', categoryRouter);
+app.use('/api/product', productRouter);
 
 // Error handler
 app.use(globalErrorHandler);

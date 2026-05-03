@@ -39,13 +39,13 @@ const createCategory = catchAsync(async (req, res, next) => {
 
 // Controller to delete category
 const deleteCategory = catchAsync(async (req, res, next) => {
-    const { categoryId } = req.params;
+    const { id } = req.params;
 
     if (req.user.role !== "admin") {
         return next(new AppError("You cant delete this category!", 401));
     }
 
-    await Category.findByIdAndDelete(categoryId);
+    await Category.findByIdAndDelete(id);
 
     res.status(200).json({
         status: "success",
@@ -55,10 +55,10 @@ const deleteCategory = catchAsync(async (req, res, next) => {
 
 // Controller to edit category
 const editCategory = catchAsync(async (req, res, next) => {
-    const { categoryId } = req.params;
+    const { id } = req.params;
     const { name, description, parentCategory, allowedAttributes, isActive } = req.body;
 
-    const category = await Category.findById(categoryId);
+    const category = await Category.findById(id);
 
     if (!category) {
         return next(new AppError("Category not found!", 404));

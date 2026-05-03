@@ -19,19 +19,19 @@ const productSchema = new mongoose.Schema({
             type: Number,
             default: 1
         },
-        media: [
-            {
-                src: {
-                    type: String,
-                    required: [true, "Image is required!"]
-                },
+        // media: [
+        //     {
+        //         src: {
+        //             type: String,
+        //             required: [true, "Image is required!"]
+        //         },
 
-                alt: {
-                    type: String,
-                    required: [true, "Alt is required!"]
-                }
-            }
-        ],
+        //         alt: {
+        //             type: String,
+        //             required: [true, "Alt is required!"]
+        //         }
+        //     }
+        // ],
         category: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Category",

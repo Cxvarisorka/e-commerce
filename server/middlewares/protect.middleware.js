@@ -21,4 +21,15 @@ const protect = catchAsync(async (req, res, next) => {
     next();
 });
 
-module.exports = { protect };
+// This middleware will check passed roles with user roles, if user role is not equal then it will return error
+const allowedTo = (...roles) => {
+    return (req, res, next) => {
+        if(!roles.includes(req.user.role)) {
+            return next(new AppError("User is not authorized!", 401));
+        }
+
+        next();
+    }
+}
+
+module.exports = { protect, allowedTo };
