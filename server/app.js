@@ -1,7 +1,10 @@
+// Env init (must be first)
+const dotenv = require('dotenv');
+dotenv.config();
+
 // 3rd Modules
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
 const Sentry = require("@sentry/node");
 const cookieParser = require('cookie-parser');
 
@@ -17,19 +20,15 @@ const globalErrorHandler = require('./controllers/error.controller');
 const authRouter = require('./routers/auth.router');
 const categoryRouter = require('./routers/category.router');
 const productRouter = require('./routers/product.router');
+const paymentRouter = require('./routers/payment.router');
 
 // ----------------------------------------------------------------------------------------
 
 // Sentry init
 Sentry.init({
     dsn: "https://a2c4e1a9685f522e320d3d0dbcfb082e@o4510668929826816.ingest.de.sentry.io/4511298815328336",
-    // Setting this option to true will send default PII data to Sentry.
-    // For example, automatic IP address collection on events
     sendDefaultPii: true,
 });
-
-// Env init
-dotenv.config();
 
 // Server init
 const app = express();
@@ -56,6 +55,7 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRouter);
 app.use('/api/category', categoryRouter);
 app.use('/api/product', productRouter);
+app.use("/api/payment", paymentRouter);
 
 // Error handler
 app.use(globalErrorHandler);
