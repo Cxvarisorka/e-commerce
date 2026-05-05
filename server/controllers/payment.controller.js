@@ -43,7 +43,7 @@ const createCheckoutSession = catchAsync(async (req, res, next) => {
         stripeSessionId: session.id,
         stripePaymentIntentId: session.payment_intent,
         totalAmount: products.reduce((accumulator, item) => {
-            return accumulator + (item.price * item.stock);
+            return accumulator + item.universal.price;
         }, 0),
         status: "pending"
     });
