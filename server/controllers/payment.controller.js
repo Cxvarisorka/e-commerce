@@ -54,7 +54,7 @@ const createCheckoutSession = catchAsync(async (req, res, next) => {
         data: {
             payment,
             sessionUrl: session.url,
-            sessionId
+            sessionId: session.id
         }
     });
 });
