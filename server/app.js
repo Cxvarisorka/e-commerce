@@ -17,6 +17,7 @@ const globalErrorHandler = require('./controllers/error.controller');
 const authRouter = require('./routers/auth.router');
 const categoryRouter = require('./routers/category.router');
 const productRouter = require('./routers/product.router');
+const paymentRouter = require('./routers/payment.router');
 
 // ----------------------------------------------------------------------------------------
 
@@ -56,6 +57,7 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRouter);
 app.use('/api/category', categoryRouter);
 app.use('/api/product', productRouter);
+app.use('/api/payment', paymentRouter);
 
 // Error handler
 app.use(globalErrorHandler);
