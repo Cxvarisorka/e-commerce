@@ -5,7 +5,6 @@ dotenv.config();
 // 3rd Modules
 const express = require('express');
 const cors = require('cors');
-const Sentry = require("@sentry/node");
 const cookieParser = require('cookie-parser');
 
 // Our modules
@@ -21,14 +20,6 @@ const authRouter = require('./routers/auth.router');
 const categoryRouter = require('./routers/category.router');
 const productRouter = require('./routers/product.router');
 const paymentRouter = require('./routers/payment.router');
-
-// ----------------------------------------------------------------------------------------
-
-// Sentry init
-Sentry.init({
-    dsn: "https://a2c4e1a9685f522e320d3d0dbcfb082e@o4510668929826816.ingest.de.sentry.io/4511298815328336",
-    sendDefaultPii: true,
-});
 
 // Server init
 const app = express();

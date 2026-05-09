@@ -25,7 +25,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ["user", "admin"],
         default: "user"
-    }
+    },
+
+    stripePaymentIntentId: { type: String },
+    stripeCustomerId: { type: String }
+    
 }, {
     timestamps: true
 });

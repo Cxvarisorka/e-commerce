@@ -1,5 +1,6 @@
 const Payment = require("../models/payment.model");
 const Product = require("../models/product.model");
+const User = require("../models/user.model");
 const AppError = require("../utils/AppError");
 const catchAsync = require("../utils/catchAsync");
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
@@ -43,7 +44,7 @@ const createCheckoutSession = catchAsync(async (req, res, next) => {
             userId: req.user._id.toString() 
         },
         totalAmount: products.reduce((accumulator, item) => {
-            return accumulator + (item.price * item.stock);
+            return accumulator + (item.universal.price * item.universal.stock);
         }, 0),
         status: "pending"
     })
@@ -109,20 +110,46 @@ const handleWebhook = (req, res) => {
         console.log(err);
     }
 
-    if (event.type !== "checkout.session.complete") {
-        return res.status(200).json({recived: true});
+    if (event.type === "checkout.session.completed") {
+    
+        const session = event.data.object
+        const { userId } = session;
+
+        if (userId) {
+            Promise.all([
+                Payment.findOneAndUpdate({
+                    stripeSessionId: session.id, webhookProcessed: false
+                }, {
+                    status: "succasse",
+                    stripePaymentIntentId: session.payment_intent,
+                    stripeCustomerId: session.customer,
+                    webhookProcessed: true,
+                }),
+
+                User.findByIdAndUpdate({
+                    id: userId
+                }, {
+                    stripeCustomerId: session.customer,
+                    stripePaymentIntentId: session.payment_intent
+                })
+
+            ]).catch(console.error);
+        }
+
+        return;
+
+    } else if (event.type === "customer.subscription.deleted") {
+        const session = event.data.object
+        await User.findByIdAndUpdate({
+            stripePaymentIntentId: session.id
+        }, {
+            stripePaymentIntentId: null,
+        })
+
+        return;
+    } else if (event.type === "invoice.payment_failed") {
+        return;
     }
-
-    const session = event.data.object
-
-    await Payment.findOneAndUpdate({
-        stripeSessionId: session.id, webhookProcessed: false
-    }, {
-        status: "succasse",
-        stripePaymentIntentId: session.payment_intent,
-        stripeCustomerId: session.customer,
-        webhookProcessed: true,
-    })
 
 
     return res.json({recived: true});
