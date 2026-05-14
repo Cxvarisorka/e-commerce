@@ -50,6 +50,11 @@ const productSchema = new mongoose.Schema({
     timestamps: true
 });
 
+// Indexes
+productSchema.index({ "universal.sellerId": 1 });
+productSchema.index({ "universal.category": 1, "universal.price": 1 });
+productSchema.index({ "universal.title": "text", "universal.description": "text" });
+
 const Product = mongoose.model("Product", productSchema);
 
 module.exports = Product;

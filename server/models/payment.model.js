@@ -38,6 +38,10 @@ const paymentSchema = new mongoose.Schema({
 
 })
 
+// Indexes
+paymentSchema.index({ userId: 1, status: 1 });
+paymentSchema.index({ webhookProcessed: 1, status: 1 });
+
 const Payment = mongoose.model("Payment", paymentSchema);
 
-module.exports = Payment
+module.exports = Payment;

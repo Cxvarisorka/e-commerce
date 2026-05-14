@@ -59,6 +59,10 @@ userSchema.methods.sendVerificationLink = function() {
     sendMail(this.email, "Verification Link", html);
 };
 
+// Indexes
+userSchema.index({ role: 1 });
+userSchema.index({ stripeCustomerId: 1 });
+
 // Model
 const User = mongoose.model("User", userSchema);
 

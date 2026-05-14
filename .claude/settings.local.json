@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\User\\\\Desktop\\\\e-commerce\" | Where-Object { $_.Name -ne 'node_modules' -and $_.Name -ne '.qodo' } | Select-Object Name, @{Name='Type'; Expression={if \\($_.PSIsContainer\\) { 'Folder' } else { 'File' }}} | Format-Table -AutoSize)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\User\\\\Desktop\\\\e-commerce\\\\server\" | Where-Object { $_.Name -ne 'node_modules' } | Select-Object Name, @{Name='Type'; Expression={if \\($_.PSIsContainer\\) { 'Folder' } else { 'File' }}} | Format-Table -AutoSize)"
+    ]
+  }
+}
