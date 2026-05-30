@@ -46,8 +46,8 @@ const createProduct = catchAsync(async (req, res, next) => {
 
     const images = [];
 
-    for (const file of req.files) {
-        const image = { src: file.filename, alt: "Product image" };
+    for (const file of req.files || []) {
+        const image = { src: file?.filename, alt: "Product image" };
 
         images.push(image);
     }

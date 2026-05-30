@@ -121,4 +121,4 @@ const verifyEmail = catchAsync(async (req, res, next) => {
     res.status(200).send("<h1>Email successfully verified, you can go back!</h1>");
 });
 
-module.exports = { signup, signin, signout, getMe, verifyEmail };
+module.exports = { signup, signin, signout, getMe, verifyEmail, createSendToken };

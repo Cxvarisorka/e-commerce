@@ -5,8 +5,7 @@ const { z } = require("zod");
 const registerSchema = z.object({
     fullname: z.string().min(3).max(30),
     email: z.email(),
-    password: z.string().min(8).max(50),
-    role: z.string()
+    password: z.string().min(8).max(50)
 }).strict();
 
 // Schema to validate signin request body property

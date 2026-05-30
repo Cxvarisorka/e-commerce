@@ -25,12 +25,14 @@ const categoryRouter = require('./routers/category.router');
 const productRouter = require('./routers/product.router');
 const paymentRouter = require('./routers/payment.router');
 const userRouter = require('./routers/user.router');
-const { globalLimiter, apiLimiter } = require('./config/rateLimit.config');
+const oauthRouter = require('./routers/oauth.router');
+const reviewRouter = require('./routers/review.router');
+const commentRouter = require('./routers/comment.router');
+
 
 // Security middlewares
 const mongoSanitizeMiddleware = require('./middlewares/security.middleware');
-const reviewRouter = require('./routers/review.router');
-const commentRouter = require('./routers/comment.router');
+const { globalLimiter, apiLimiter } = require('./config/rateLimit.config');
 
 // ----------------------------------------------------------------------------------------
 
@@ -85,12 +87,13 @@ app.use('/api', apiLimiter);
 
 // Routers
 app.use('/api/auth', authRouter);
+app.use('/api/oauth', oauthRouter);
 app.use('/api/category', categoryRouter);
 app.use('/api/product', productRouter);
 app.use('/api/payment', paymentRouter);
-app.use("/api/user", userRouter);
-app.use("/api/review", reviewRouter);
-app.use("/api/comment", commentRouter);
+app.use('/api/user', userRouter);
+app.use('/api/review', reviewRouter);
+app.use('/api/comment', commentRouter);
 
 
 // Error handler

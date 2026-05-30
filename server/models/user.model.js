@@ -33,7 +33,10 @@ const userSchema = new mongoose.Schema({
         sparse: true
     },
 
-    avatar: { type: String }
+    avatar: { type: String },
+
+    oauthid: { type: String },
+    oauthProvider: { type: String }
 }, {
     timestamps: true
 });
