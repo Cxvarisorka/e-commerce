@@ -14,12 +14,9 @@ const getReviews= catchAsync(async (req, res, next) => {
             reviews
         }
     })
+});
 
-
-
-})
 const getReviewById = catchAsync(async (req, res, next) => {
-
     const { productId } = req.params;
 
     if (!mongoose.Types.ObjectId(productId)) {
@@ -37,11 +34,8 @@ const getReviewById = catchAsync(async (req, res, next) => {
         data: {
             review
         }
-    })
-
-
-
-})
+    });
+});
 
 const createReview = catchAsync(async (req, res, next) => {
     const { rating, comment } = req.body;
