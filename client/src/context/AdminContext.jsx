@@ -34,6 +34,8 @@ export const AdminProvider = ({ children }) => {
         try {
             const res = await fetchCreateProduct(categoryId, formData);
             const newProduct = res.data?.data?.product;
+
+            console.log(res)
             
             if (newProduct) {
                 setProducts((prev) => [...prev, newProduct]);
@@ -46,6 +48,7 @@ export const AdminProvider = ({ children }) => {
             toast.error("product couldn't updated");
             return false;
         }
+        
     };
 
     const updateProduct = async (id, formData) => {

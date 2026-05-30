@@ -21,13 +21,13 @@ const productRouter = express.Router();
 productRouter.get('/', getProducts);
 
 // Create product
-productRouter.post('/:categoryId', protect, allowedTo("admin", "seller"), uploadLimiter, upload.array("images", 5), validate(validationProductSchema), createProduct);
+productRouter.post('/:categoryId', protect, allowedTo("admin", "seller"), uploadLimiter, upload.array("images", 5),  createProduct);
 
 // Delete product by id
 productRouter.delete('/:productId', protect, allowedTo("admin", "seller"), deleteProduct);
 
 // Edit product
-productRouter.patch('/:productId', protect, uploadLimiter, upload.array("images", 5), validate(validationProductSchema), editProduct);
+productRouter.patch('/:productId', protect, uploadLimiter, upload.array("images", 5),  editProduct);
 
 module.exports = productRouter;
 
