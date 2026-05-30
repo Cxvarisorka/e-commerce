@@ -1,6 +1,7 @@
 // Models
 const Category = require("../models/category.model");
 const Product = require("../models/product.model");
+const { validateProduct } = require("../services/groqService");
 
 // Utils
 const AppError = require("../utils/AppError");
@@ -49,6 +50,12 @@ const createProduct = catchAsync(async (req, res, next) => {
         const image = { src: file.filename, alt: "Product image" };
 
         images.push(image);
+    }
+
+    const result = await validateProduct(title, description, price);
+
+    if (result.status === "rejected" || result.status === "needs_review") {
+        return res.status(400).json(result);
     }
 
     const product = await Product.create({
