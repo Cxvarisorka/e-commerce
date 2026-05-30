@@ -10,7 +10,7 @@ const { getProducts, createProduct, editProduct, deleteProduct } = require('../c
 
 // Configs
 const upload = require('../config/upload.config');
-const { uploadLimiter } = require('../config/rateLimit.config');
+const { uploadLimiter, aiRateLimiter } = require('../config/rateLimit.config');
 
 // Validation
 const { validationProductSchema } = require('../validations/product.validation');
@@ -21,7 +21,7 @@ const productRouter = express.Router();
 productRouter.get('/', getProducts);
 
 // Create product
-productRouter.post('/:categoryId', protect, allowedTo("admin", "seller"), uploadLimiter, upload.array("images", 5), validate(validationProductSchema), createProduct);
+productRouter.post('/:categoryId', protect, allowedTo("admin", "seller"), uploadLimiter, aiRateLimiter, upload.array("images", 5), validate(validationProductSchema), createProduct);
 
 // Delete product by id
 productRouter.delete('/:productId', protect, allowedTo("admin", "seller"), deleteProduct);

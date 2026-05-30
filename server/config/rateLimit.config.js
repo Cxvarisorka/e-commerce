@@ -53,4 +53,10 @@ const paymentLimiter = rateLimit({
     handler: buildHandler('Too many payment requests — please try again later.'),
 });
 
-module.exports = { globalLimiter, authLimiter, apiLimiter, uploadLimiter, paymentLimiter };
+const aiRateLimiter = rateLimit({
+  windowMs: 60 * 1000,   // 1 minute
+  max: 10,                // max 10 AI calls per minute per IP
+  message: { error: "Too many requests, please slow down" },
+});
+
+module.exports = { globalLimiter, authLimiter, apiLimiter, uploadLimiter, paymentLimiter, aiRateLimiter };
