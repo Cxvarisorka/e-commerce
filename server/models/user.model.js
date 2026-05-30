@@ -27,6 +27,12 @@ const userSchema = new mongoose.Schema({
         default: "user"
     },
 
+    stripeAccountId: {
+        type: String,
+        unique: true,
+        sparse: true
+    },
+
     avatar: { type: String }
 }, {
     timestamps: true
