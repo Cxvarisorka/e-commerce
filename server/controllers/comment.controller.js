@@ -1,28 +1,24 @@
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/AppError");
 const Product = require("../models/product.model");
 const Comment = require("../models/comment.model");
 
 const getComments = catchAsync(async (req, res, next) => {
-
     const comments = await Comment.find();
 
     return res.json({
         status: "succass",
         data: comments
-    })
-
-
-})
+    });
+});
 
 const getCommentById = catchAsync(async (req, res, next) => {
-
     const { commentId } = req.params;
 
-    if (!mongoose.Types.ObjectId(commentId)) {
-        return next(new AppError("Invlid comment id", 400));
-    }
+    // if (!mongoose.Types.ObjectId(commentId)) {
+    //     return next(new AppError("Invlid comment id", 400));
+    // }
 
     const comment = await Comment.findById(commentId);
 
@@ -33,18 +29,16 @@ const getCommentById = catchAsync(async (req, res, next) => {
     return res.json({
         status: "succass",
         data: comment
-    })
-
-})
+    });
+});
 
 const createComment = catchAsync(async (req, res, next) => {
-
     const { content } = req.body;
     const { productId } = req.params;
 
-    if (!mongoose.Types.ObjectId(productId)) {
-        return next(new AppError("Invlid product id", 400));
-    }
+    // if (!mongoose.Types.ObjectId(productId)) {
+    //     return next(new AppError("Invlid product id", 400));
+    // }
 
     if (!content) {
         return next(new AppError("Comment content is required", 400));
@@ -57,7 +51,7 @@ const createComment = catchAsync(async (req, res, next) => {
     })
 
     await Product.findByIdAndUpdate(productId, {
-        $push: { comments: comment._id }
+        $push: { "universal.comments": comment._id }
     })
 
     return res.status(201).json({
@@ -66,18 +60,15 @@ const createComment = catchAsync(async (req, res, next) => {
         data: {
             comment
         }
-    })
-
-
-})
+    });
+});
 
 const deleteCommentById = catchAsync(async (req, res, next) => {
-
     const { commentId } = req.params;
 
-    if (!mongoose.Types.ObjectId(commentId)) {
-        return next(new AppError("Invlid comment id", 400));
-    }
+    // if (!mongoose.Types.ObjectId(commentId)) {
+    //     return next(new AppError("Invlid comment id", 400));
+    // }
 
     const comment = await Comment.findById(commentId);
 
@@ -98,20 +89,16 @@ const deleteCommentById = catchAsync(async (req, res, next) => {
     return res.json({
         status: "success",
         message: "Comment deleted successfully!"
-    })
-    
-
-
-})
+    });
+});
 
 const updateCommentById = catchAsync(async (req, res, next) => {
-
     const { commentId } = req.params;
     const { content } = req.body;
 
-    if (!mongoose.Types.ObjectId(commentId)) {
-        return next(new AppError("Invlid comment id", 400));
-    }
+    // if (!mongoose.Types.ObjectId(commentId)) {
+    //     return next(new AppError("Invlid comment id", 400));
+    // }
 
     if (!content) {
         return next(new AppError("Comment content is required", 400));
@@ -134,9 +121,7 @@ const updateCommentById = catchAsync(async (req, res, next) => {
     return res.json({
         status: "success",
         message: "Comment updated successfully!",
-    })
-
-
-})
+    });
+});
 
 module.exports = { getComments, getCommentById, createComment, deleteCommentById, updateCommentById };
