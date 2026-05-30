@@ -2,6 +2,7 @@ const { default: mongoose } = require("mongoose");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/AppError");
 const Product = require("../models/product.model");
+const Comment = require("../models/comment.model");
 
 const getComments = catchAsync(async (req, res, next) => {
 
