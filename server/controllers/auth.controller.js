@@ -1,3 +1,4 @@
+const ms = require("ms");
 const User = require("../models/user.model");
 const AppError = require("../utils/AppError");
 const catchAsync = require("../utils/catchAsync");
@@ -8,7 +9,7 @@ const createSendToken = (user, res, statusCode) => {
     const token = signToken(user);
 
     res.cookie('jwt', token, {
-        maxAge: process.env.COOKIE_EXPIRES * 24 * 60 * 60 * 1000,
+        maxAge: ms(process.env.COOKIE_EXPIRES),
         httpOnly: true,
         sameSite: process.env.NODE_ENV === 'dev' ? 'Lax' : 'Strict',
         secure: process.env.NODE_ENV === 'dev' ? false : true
