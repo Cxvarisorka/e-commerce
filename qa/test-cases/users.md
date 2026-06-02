@@ -16,13 +16,13 @@
 
 | ID | Title | Priority | Type | Status |
 |----|-------|----------|------|--------|
-| TC-USER-01 | List all users | Medium | Functional | Not Run |
-| TC-USER-02 | List users does not leak password hashes | Critical | Security | Not Run |
-| TC-USER-03 | Get user by valid id | Medium | Functional | Not Run |
-| TC-USER-04 | Get user invalid ObjectId | Medium | Negative | Not Run |
-| TC-USER-05 | Get user not found | Medium | Negative | Not Run |
-| TC-USER-06 | Get user by id leaks password hash | Critical | Security | Not Run |
-| TC-USER-07 | Update own profile | High | Functional | Not Run |
+| TC-USER-01 | List all users | Medium | Functional | Passed |
+| TC-USER-02 | List users does not leak password hashes | Critical | Security | Passed |
+| TC-USER-03 | Get user by valid id | Medium | Functional | Passed |
+| TC-USER-04 | Get user invalid ObjectId | Medium | Negative | Passed |
+| TC-USER-05 | Get user not found | Medium | Negative | Passed |
+| TC-USER-06 | Get user by id leaks password hash | Critical | Security | Passed |
+| TC-USER-07 | Update own profile | High | Functional | Passed |
 | TC-USER-08 | Update profile with avatar upload | Medium | Functional | Not Run |
 | TC-USER-09 | Update another user's profile (forbidden) | Critical | Authorization | Not Run |
 | TC-USER-10 | Update profile without auth | High | Authorization | Not Run |
