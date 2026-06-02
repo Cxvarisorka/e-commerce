@@ -7,11 +7,10 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Home from "./pages/Home";
 import AdminPanel from "./pages/AdminPanel"; 
+import ProductDetails from "./pages/ProductDetails";
 
 // Components
 import ProtectedRoute from "./components/ProtectedRoute";
-
-
 import Nav from "./components/Nav";
 import Loading from "./components/Loading";
 
@@ -36,6 +35,8 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           
+        
+          <Route path="/product/:productId" element={<ProductDetails />} />
           
           <Route 
             path="/admin" 

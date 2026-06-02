@@ -3,7 +3,10 @@ import { fetchAllUsers, fetchUpdateUserRole, fetchDeleteUser } from "../services
 import { useAdmin } from "../context/AdminContext";
 import { toast } from "react-toastify";
 
-import UsersPage from "../components/UI/admin/usersPage";
+
+import UsersTab from "../components/UI/admin/usersPage";
+import ProductForm from "../components/UI/admin/ProductForm";
+import ProductsList from "../components/UI/admin/ProductsList";
 
 const AdminPanel = () => {
     const [activeTab, setActiveTab] = useState("users"); 
@@ -17,11 +20,9 @@ const AdminPanel = () => {
     const [price, setPrice] = useState("");
     const [description, setDescription] = useState("");
     const [image, setImage] = useState(null);
-    
-    
     const [categoryId, setCategoryId] = useState("6a15a65e33422249dd1d0e35"); 
 
-   useEffect(() => {
+    useEffect(() => {
         if (activeTab === "users") {
             const getUsers = async () => {
                 try {
@@ -30,7 +31,7 @@ const AdminPanel = () => {
                     setUsers(res.data.data || []);
                 } catch (err) {
                     toast.error("couldn't fetch all user");
-                } finally {
+                } finally { 
                     setUsersLoading(false);
                 }
             };
@@ -39,7 +40,6 @@ const AdminPanel = () => {
             loadProducts(); 
         }
     }, [activeTab]);
-
 
     const handleRoleChange = async (userId, newRole) => {
         try {
@@ -81,11 +81,7 @@ const AdminPanel = () => {
         }
 
         if (success) {
-            setTitle("");
-            setPrice("");
-            setDescription("");
-            setImage(null);
-            setIsEditing(null);
+            clearForm();
             e.target.reset();
         }
     };
@@ -97,7 +93,7 @@ const AdminPanel = () => {
         setDescription(product.universal?.description || "");
     };
 
-    const cancelEdit = () => {
+    const clearForm = () => {
         setIsEditing(null);
         setTitle("");
         setPrice("");
@@ -107,6 +103,7 @@ const AdminPanel = () => {
 
     return (
         <div className="max-w-6xl mx-auto p-6 bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 mt-10">
+          
             <div className="flex gap-4 border-b border-slate-100 pb-4 mb-6">
                 <button
                     onClick={() => setActiveTab("users")}
@@ -126,139 +123,40 @@ const AdminPanel = () => {
                 </button>
             </div>
 
-            <UsersPage 
-            onRoleChange = {handleRoleChange}
-            onDeleteUser = {handleUserDelete}/>
+            {activeTab === "users" && (
+                <UsersTab 
+                    users={users} 
+                    usersLoading={usersLoading}
+                    onRoleChange={handleRoleChange}
+                    onDeleteUser={handleUserDelete}
+                />
+            )}
+
 
             {activeTab === "products" && (
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div className="bg-slate-50 p-5 rounded-2xl border border-slate-100 h-fit">
-                        <h3 className="text-lg font-bold text-slate-800 mb-4">
-                            {isEditing ? "📝 პროდუქტის რედაქტირება" : "➕ ახალი პროდუქტის დამატება"}
-                        </h3>
-                        <form onSubmit={handleProductSubmit} className="space-y-4">
-                            <div>
-                                <label className="block text-xs font-semibold text-slate-600 mb-1">სათაური</label>
-                                <input
-                                    type="text"
-                                    value={title}
-                                    onChange={(e) => setTitle(e.target.value)}
-                                    className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-cyan-500"
-                                    required
-                                />
-                            </div>
-                            
-                            {!isEditing && (
-                                <div>
-                                    <label className="block text-xs font-semibold text-slate-600 mb-1">კატეგორია</label>
-                                    <select
-                                        value={categoryId}
-                                        onChange={(e) => setCategoryId(e.target.value)}
-                                        className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-cyan-500 cursor-pointer"
-                                        required
-                                    >
-                                        <option value="6a15a65e33422249dd1d0e35">Electronics</option>
-                                    </select>
-                                </div>
-                            )}
-
-                            <div>
-                                <label className="block text-xs font-semibold text-slate-600 mb-1">ფასი ($)</label>
-                                <input
-                                    type="number"
-                                    value={price}
-                                    onChange={(e) => setPrice(e.target.value)}
-                                    className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-cyan-500"
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-xs font-semibold text-slate-600 mb-1">აღწერა</label>
-                                <textarea
-                                    value={description}
-                                    onChange={(e) => setDescription(e.target.value)}
-                                    className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-cyan-500 h-20 resize-none"
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-xs font-semibold text-slate-600 mb-1">პროდუქტის სურათი</label>
-                                <input
-                                    type="file"
-                                    onChange={(e) => setImage(e.target.files[0])}
-                                    className="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-cyan-50 file:text-cyan-700 hover:file:bg-cyan-100 cursor-pointer"
-                                    required={!isEditing} 
-                                />
-                            </div>
-                            <div className="flex gap-2 pt-2">
-                                <button
-                                    type="submit"
-                                    className="flex-1 bg-cyan-600 hover:bg-cyan-500 text-white font-semibold py-2 rounded-xl text-sm transition cursor-pointer"
-                                >
-                                    {isEditing ? "განახლება" : "დამატება"}
-                                </button>
-                                {isEditing && (
-                                    <button
-                                        type="button"
-                                        onClick={cancelEdit}
-                                        className="bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition cursor-pointer"
-                                    >
-                                        გაუქმება
-                                    </button>
-                                )}
-                            </div>
-                        </form>
-                    </div>
+                    <ProductForm 
+                        isEditing={isEditing}
+                        title={title}
+                        setTitle={setTitle}
+                        categoryId={categoryId}
+                        setCategoryId={setCategoryId}
+                        price={price}
+                        setPrice={setPrice}
+                        description={description}
+                        setDescription={setDescription}
+                        setImage={setImage}
+                        onSubmit={handleProductSubmit}
+                        onCancel={clearForm}
+                    />
 
                     <div className="lg:col-span-2">
-                        {productsLoading ? (
-                            <div className="text-center py-10 text-slate-600 font-semibold">იტვირთება პროდუქტები...</div>
-                        ) : (
-                            <div className="overflow-x-auto rounded-2xl border border-slate-100">
-                                <table className="w-full text-left border-collapse">
-                                    <thead>
-                                        <tr className="bg-slate-50 border-b border-slate-100 text-slate-600 font-semibold text-sm">
-                                            <th className="p-4">პროდუქტი</th>
-                                            <th className="p-4">ფასი</th>
-                                            <th className="p-4">ამტვირთავი (Seller)</th> {/* პირობის ახალი სვეტი */}
-                                            <th className="p-4 text-center">მოქმედება</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-slate-50 text-slate-700 text-sm">
-                                        {products.map((product) => (
-                                            <tr key={product._id} className="hover:bg-slate-50/80 transition-colors">
-                                                <td className="p-4 font-medium text-slate-900">{product.universal?.title || "უსახელო"}</td>
-                                                <td className="p-4 font-bold text-cyan-600">${product.universal?.price || 0}</td>
-                                                
-                                                
-                                                <td className="p-4 text-slate-500 font-medium">
-                                                    {product.seller?.fullname || product.seller?.name || product.createdBy?.fullname || "Admin (System)"}
-                                                </td>
-
-                                                <td className="p-4 text-center space-x-2">
-                                                    <button
-                                                        onClick={() => startEdit(product)}
-                                                        className="text-amber-600 hover:text-amber-700 font-semibold hover:underline cursor-pointer"
-                                                    >
-                                                        Edit
-                                                    </button>
-                                                    <button
-                                                        onClick={() => {
-                                                            if (window.confirm("ნამდვილად გსურთ პროდუქტის წაშლა?")) {
-                                                                deleteProduct(product._id);
-                                                            }
-                                                        }}
-                                                        className="text-red-500 hover:text-red-700 font-semibold hover:underline cursor-pointer"
-                                                    >
-                                                        Delete
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        )}
+                        <ProductsList 
+                            products={products}
+                            productsLoading={productsLoading}
+                            onStartEdit={startEdit}
+                            onDeleteProduct={deleteProduct}
+                        />
                     </div>
                 </div>
             )}
