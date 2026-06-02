@@ -14,19 +14,16 @@ const getReviews= catchAsync(async (req, res, next) => {
             reviews
         }
     })
-
-
-
 })
 const getReviewById = catchAsync(async (req, res, next) => {
 
     const { productId } = req.params;
 
-    if (!mongoose.Types.ObjectId(productId)) {
+    if (!mongoose.Types.ObjectId.isValid(productId)) {
         return next(new AppError("Invlid product id", 400));
     }
 
-    const review = await Review.findById(productId);
+    const review = await Review.find({ product: productId });
 
     if (!review) {
         return next(new AppError("No review found with this id", 404));
@@ -47,7 +44,7 @@ const createReview = catchAsync(async (req, res, next) => {
     const { rating, comment } = req.body;
     const { productId } = req.params;
 
-    if (!mongoose.Types.ObjectId(productId)) {
+    if (!mongoose.Types.ObjectId.isValid(productId)) {
         return next(new AppError("Invlid product id", 400));
     }
 
@@ -79,7 +76,7 @@ const deleteReviewById = catchAsync(async (req, res, next) => {
 
     const { reviewId } = req.params;
 
-    if (!mongoose.Types.ObjectId(reviewId)) {
+    if (!mongoose.Types.ObjectId.isValid(reviewId)) {
         return next(new AppError("Invlid review id", 400));
     }
 
@@ -112,7 +109,7 @@ const updateReviewById = catchAsync(async (req, res, next) => {
     const { reviewId } = req.params;
     const { rating, comment } = req.body;
 
-    if (!mongoose.Types.ObjectId(reviewId)) {
+    if (!mongoose.Types.ObjectId.isValid(reviewId)) {
         return next(new AppError("Invlid review id", 400));
     }
 

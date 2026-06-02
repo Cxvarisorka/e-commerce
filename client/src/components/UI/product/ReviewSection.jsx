@@ -17,7 +17,7 @@ const ReviewSection = ({ productId }) => {
         <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm mt-6">
             <h3 className="text-lg font-bold text-slate-800 mb-4">⭐ მომხმარებელთა შეფასებები ({reviews.length})</h3>
             
-            {/* შეფასების ფორმა */}
+      
             <form onSubmit={handleSubmit} className="mb-6 space-y-3">
                 <div>
                     <label className="block text-xs font-semibold text-slate-600 mb-1">აირჩიე რეიტინგი</label>
@@ -41,7 +41,7 @@ const ReviewSection = ({ productId }) => {
                 </button>
             </form>
 
-            {/* შეფასებების სია */}
+            
             <div className="space-y-4">
                 {reviews.map((rev) => (
                     <div key={rev._id} className="p-4 bg-slate-50 rounded-xl border border-slate-100 flex justify-between items-start">

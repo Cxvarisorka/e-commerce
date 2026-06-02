@@ -31,16 +31,16 @@ const CommentSection = ({ productId }) => {
             </form>
 
             <div className="space-y-3">
-                {comments.map((comm) => (
-                    <div key={comm._id} className="p-3 bg-slate-50/50 rounded-xl border border-slate-100 flex justify-between items-center">
-                        <div>
-                            <p className="text-sm text-slate-800">{comm.text}</p>
-                            <span className="text-[10px] text-slate-400">ავტორი: {comm.user?.fullname || "სტუმარი"}</span>
-                        </div>
-                        <button onClick={() => deleteComment(comm._id)} className="text-xs text-slate-400 hover:text-red-500 cursor-pointer">წაშლა</button>
-                    </div>
-                ))}
+    {comments.map((comm) => (
+        <div key={comm._id} className="p-3 bg-slate-50/50 rounded-xl border border-slate-100 flex justify-between items-center">
+            <div>
+                <p className="text-sm text-slate-800">{comm.content}</p> 
+                <span className="text-[10px] text-slate-400">ავტორი: {comm.user?.fullname || "სტუმარი"}</span>
             </div>
+            <button onClick={() => deleteComment(comm._id)} className="text-xs text-slate-400 hover:text-red-500 cursor-pointer">წაშლა</button>
+        </div>
+    ))}
+</div>
         </div>
     );
 };

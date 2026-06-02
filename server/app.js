@@ -89,8 +89,8 @@ app.use('/api/category', categoryRouter);
 app.use('/api/product', productRouter);
 app.use('/api/payment', paymentRouter);
 app.use("/api/user", userRouter);
-app.use("/api/review", reviewRouter);
-app.use("/api/comment", commentRouter);
+app.use("/api/reviews", reviewRouter);
+app.use("/api/comments", commentRouter);
 
 
 // Error handler

@@ -2,6 +2,7 @@ const { default: mongoose } = require("mongoose");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/AppError");
 const Product = require("../models/product.model");
+const Comment = require('../models/comment.model')
 
 const getComments = catchAsync(async (req, res, next) => {
 
@@ -19,7 +20,7 @@ const getCommentById = catchAsync(async (req, res, next) => {
 
     const { commentId } = req.params;
 
-    if (!mongoose.Types.ObjectId(commentId)) {
+    if (!mongoose.Types.ObjectId.isValid(commentId)) {
         return next(new AppError("Invlid comment id", 400));
     }
 
@@ -41,7 +42,7 @@ const createComment = catchAsync(async (req, res, next) => {
     const { content } = req.body;
     const { productId } = req.params;
 
-    if (!mongoose.Types.ObjectId(productId)) {
+    if (!mongoose.Types.ObjectId.isValid(productId)) {
         return next(new AppError("Invlid product id", 400));
     }
 
@@ -74,7 +75,7 @@ const deleteCommentById = catchAsync(async (req, res, next) => {
 
     const { commentId } = req.params;
 
-    if (!mongoose.Types.ObjectId(commentId)) {
+    if (!mongoose.Types.ObjectId.isValid(commentId)) {
         return next(new AppError("Invlid comment id", 400));
     }
 
@@ -108,7 +109,7 @@ const updateCommentById = catchAsync(async (req, res, next) => {
     const { commentId } = req.params;
     const { content } = req.body;
 
-    if (!mongoose.Types.ObjectId(commentId)) {
+    if (!mongoose.Types.ObjectId.isValid(commentId)) {
         return next(new AppError("Invlid comment id", 400));
     }
 

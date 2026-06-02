@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router"; // 💡 React Router v7-ში იმპორტი ხდება 'react-router'-დან
+import { useParams } from "react-router";
 import { ProductDetailsProvider, useProductDetails } from "../context/ProductDetailsContext.jsx";
 import ReviewSection from "../components/UI/product/ReviewSection.jsx";
 import CommentSection from "../components/UI/product/CommentSection.jsx";

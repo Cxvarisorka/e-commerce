@@ -1,8 +1,7 @@
 import { api } from "../api/Axios";
 
-
-export const fetchProductComments = async (productId) => {
-    const res = await api.get(`/comments/${productId}`); 
+export const fetchProductComments = async () => {
+    const res = await api.get(`/comments`); 
     return res.data;
 };
 

@@ -10,10 +10,8 @@ const Home = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await api.get("/products"); 
-                const fetchedProducts = Array.isArray(response.data) 
-                    ? response.data 
-                    : response.data.products || [];
+                const response = await api.get("/product"); 
+                const fetchedProducts = response.data?.data?.products || [];
 
                 setProducts(fetchedProducts); 
                 setLoading(false);
@@ -56,40 +54,43 @@ const Home = () => {
                 </div>
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    {products.map((product) => (
-                        <div 
-                            key={product._id} 
-                            className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition duration-200"
-                        >
-                            
-                            <div className="h-48 bg-slate-100 overflow-hidden flex items-center justify-center">
-                                <img 
-                                    src={product.image || "https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500&auto=format&fit=crop&q=60"} 
-                                    alt={product.name || product.title} 
-                                    className="w-full h-full object-cover hover:scale-105 transition duration-300"
-                                />
-                            </div>
+                    {products.map((product) => {
+                        const details = product.universal || {};
+                        const productImage = details.images?.[0]?.src || "https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500&auto=format&fit=crop&q=60";
 
-                         
-                            <div className="p-5 flex-grow flex flex-col justify-between">
-                                <div>
-                                    <h3 className="font-semibold text-base text-slate-800 line-clamp-2 min-h-[48px]">
-                                        {product.name || product.title} 
-                                    </h3>
-                                    <p className="text-cyan-600 font-bold text-lg mt-2">
-                                        {product.price ? `${product.price} ₾` : "ფასი არაა მითითებული"}
-                                    </p>
+                        return (
+                            <div 
+                                key={product._id} 
+                                className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition duration-200"
+                            >
+                                <div className="h-48 bg-slate-100 overflow-hidden flex items-center justify-center">
+                                    <img 
+                                        src={productImage} 
+                                        alt={details.title || "პროდუქტი"} 
+                                        className="w-full h-full object-cover hover:scale-105 transition duration-300"
+                                    />
                                 </div>
-                                
-                                <Link 
-                                    to={`/product/${product._id}`} 
-                                    className="mt-5 block text-center bg-cyan-600 hover:bg-cyan-500 text-white font-semibold py-2.5 rounded-xl text-sm transition cursor-pointer shadow-sm"
-                                >
-                                    დეტალების ნახვა
-                                </Link>
+
+                                <div className="p-5 flex-grow flex flex-col justify-between">
+                                    <div>
+                                        <h3 className="font-semibold text-base text-slate-800 line-clamp-2 min-h-[48px]">
+                                            {details.title || "უსახელო პროდუქტი"} 
+                                        </h3>
+                                        <p className="text-cyan-600 font-bold text-lg mt-2">
+                                            {details.price ? `${details.price} ₾` : "ფასი არაა მითითებული"}
+                                        </p>
+                                    </div>
+                                    
+                                    <Link 
+                                        to={`/product/${product._id}`} 
+                                        className="mt-5 block text-center bg-cyan-600 hover:bg-cyan-500 text-white font-semibold py-2.5 rounded-xl text-sm transition cursor-pointer shadow-sm"
+                                    >
+                                        დეტალების ნახვა
+                                    </Link>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             )}
         </div>

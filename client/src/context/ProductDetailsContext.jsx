@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
 import { fetchProductReviews, fetchCreateReview, fetchDeleteReview } from "../services/ReviewService";
-import { fetchCreateComment, fetchDeleteComment } from "../services/CommentService";
+import { fetchProductComments, fetchCreateComment, fetchDeleteComment } from "../services/CommentService";
 import { toast } from "react-toastify";
 
 const ProductDetailsContext = createContext();
@@ -13,10 +13,26 @@ export const ProductDetailsProvider = ({ children }) => {
     const loadProductData = async (productId) => {
         try {
             setLoading(true);
-            const reviewsData = await fetchProductReviews(productId);
-            setReviews(reviewsData.data || reviewsData);
+            
+            const [reviewsRes, commentsRes] = await Promise.all([
+                fetchProductReviews(productId),
+                fetchProductComments()
+            ]);
+            if (reviewsRes?.data?.review) {
+                setReviews(reviewsRes.data.review);
+            } else {
+                setReviews([]);
+            }
+
+            const allComments = commentsRes?.data || [];
+            const filteredComments = allComments.filter(
+                (c) => (c.product?._id || c.product) === productId
+            );
+            setComments(filteredComments);
+
         } catch (err) {
-            toast.error("couldn't fetch all data ");
+            console.error("Fetch error:", err);
+            toast.error("couldn't fetch all data");
         } finally {
             setLoading(false);
         }
@@ -24,21 +40,31 @@ export const ProductDetailsProvider = ({ children }) => {
 
     const addReview = async (productId, rating, commentText) => {
         try {
-            const newReview = await fetchCreateReview(productId, { rating, comment: commentText });
-            setReviews((prev) => [...prev, newReview.data || newReview]);
-            toast.success("review added!");
+            const res = await fetchCreateReview(productId, { rating, comment: commentText });
+            const createdReview = res?.data?.review;
+            
+            if (createdReview) {
+                setReviews((prev) => [...prev, createdReview]);
+                toast.success("review added!");
+            }
         } catch (err) {
-            toast.error("review couldn't added ");
+            console.error(err);
+            toast.error("review couldn't added");
         }
     };
 
     const addComment = async (productId, text) => {
         try {
-            const newComment = await fetchCreateComment(productId, { text });
-            setComments((prev) => [...prev, newComment.data || newComment]);
-            toast.success("comment added!");
+            const res = await fetchCreateComment(productId, { content: text });
+            const createdComment = res?.data?.comment;
+            
+            if (createdComment) {
+                setComments((prev) => [...prev, createdComment]);
+                toast.success("comment added!");
+            }
         } catch (err) {
-            toast.error("comment couldn't deleted");
+            console.error(err);
+            toast.error("comment couldn't added");
         }
     };
 
@@ -51,6 +77,7 @@ export const ProductDetailsProvider = ({ children }) => {
             toast.error("couldn't deleted");
         }
     };
+
 
     const deleteComment = async (commentId) => {
         try {
