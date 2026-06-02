@@ -21,22 +21,22 @@ input sanitization, error handling, CORS, file uploads, and health.
 
 | ID | Title | Priority | Type | Status |
 |----|-------|----------|------|--------|
-| TC-SEC-01 | Health endpoint up | Low | Functional | Not Run |
-| TC-SEC-02 | Security headers present (helmet) | High | Security | Not Run |
-| TC-SEC-03 | CORS restricted to CLIENT_URL + credentials | High | Security | Not Run |
-| TC-SEC-04 | NoSQL injection sanitized | Critical | Security | Not Run |
-| TC-SEC-05 | HPP parameter pollution handled | Medium | Security | Not Run |
-| TC-SEC-06 | Global error handler hides internals | High | Security | Not Run |
-| TC-SEC-07 | Validation returns generic 400 | Low | Negative | Not Run |
-| TC-SEC-08 | Global rate limit (500/10min) | Medium | Security | Not Run |
-| TC-SEC-09 | API rate limit (200/15min) | Medium | Security | Not Run |
-| TC-SEC-10 | Upload limiter (30/60min) | Medium | Security | Not Run |
-| TC-SEC-11 | AI limiter (10/min) on product create | Medium | Security | Not Run |
-| TC-SEC-12 | File upload type/size restriction | High | Security | Not Run |
-| TC-SEC-13 | Uploaded filename collision/traversal | Medium | Security | Not Run |
-| TC-SEC-14 | Cookie flags in production | Critical | Security | Not Run |
-| TC-SEC-15 | Webhook excluded from limiters & JSON parsing | High | Functional | Not Run |
-| TC-SEC-16 | 404 for unknown route | Low | Negative | Not Run |
+| TC-SEC-01 | Health endpoint up | Low | Functional | Passed |
+| TC-SEC-02 | Security headers present (helmet) | High | Security | Passed |
+| TC-SEC-03 | CORS restricted to CLIENT_URL + credentials | High | Security | Passed |
+| TC-SEC-04 | NoSQL injection sanitized | Critical | Security | Passed |
+| TC-SEC-05 | HPP parameter pollution handled | Medium | Security | Passed |
+| TC-SEC-06 | Global error handler hides internals | High | Security | Passed |
+| TC-SEC-07 | Validation returns generic 400 | Low | Negative | Passed |
+| TC-SEC-08 | Global rate limit (500/10min) | Medium | Security | Passed |
+| TC-SEC-09 | API rate limit (200/15min) | Medium | Security | Passed |
+| TC-SEC-10 | Upload limiter (30/60min) | Medium | Security | Passed |
+| TC-SEC-11 | AI limiter (10/min) on product create | Medium | Security | Passed |
+| TC-SEC-12 | File upload type/size restriction | High | Security | Passed |
+| TC-SEC-13 | Uploaded filename collision/traversal | Medium | Security | Passed |
+| TC-SEC-14 | Cookie flags in production | Critical | Security | Passed |
+| TC-SEC-15 | Webhook excluded from limiters & JSON parsing | High | Functional | Passed |
+| TC-SEC-16 | 404 for unknown route | Low | Negative | Passed |
 
 ---
 

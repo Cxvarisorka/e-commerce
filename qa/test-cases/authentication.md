@@ -13,29 +13,29 @@
 
 | ID | Title | Priority | Type | Status |
 |----|-------|----------|------|--------|
-| TC-AUTH-01 | Sign up with valid data | Critical | Functional | Not Run |
-| TC-AUTH-02 | Sign up sends verification email | High | Functional | Not Run |
-| TC-AUTH-03 | Sign up with duplicate email | High | Negative | Not Run |
-| TC-AUTH-04 | Sign up short fullname (<3) | Medium | Boundary | Not Run |
-| TC-AUTH-05 | Sign up long fullname (>30) | Medium | Boundary | Not Run |
-| TC-AUTH-06 | Sign up invalid email | Medium | Negative | Not Run |
-| TC-AUTH-07 | Sign up short password (<8) | High | Boundary | Not Run |
-| TC-AUTH-08 | Sign up with extra `role` field | High | Security | Not Run |
-| TC-AUTH-09 | Sign up missing required fields | Medium | Negative | Not Run |
-| TC-AUTH-10 | Sign in with valid verified account | Critical | Functional | Not Run |
-| TC-AUTH-11 | Sign in sets httpOnly jwt cookie | Critical | Security | Not Run |
-| TC-AUTH-12 | Sign in wrong password | High | Negative | Not Run |
-| TC-AUTH-13 | Sign in unknown email | High | Negative | Not Run |
-| TC-AUTH-14 | Sign in unverified account | High | Functional | Not Run |
-| TC-AUTH-15 | Password never returned in response | Critical | Security | Not Run |
-| TC-AUTH-16 | GET /me with valid cookie | High | Functional | Not Run |
-| TC-AUTH-17 | GET /me without token | High | Authorization | Not Run |
-| TC-AUTH-18 | GET /me with tampered/invalid token | High | Security | Not Run |
-| TC-AUTH-19 | Sign out clears cookie | Medium | Functional | Not Run |
-| TC-AUTH-20 | Verify email with valid token | Critical | Functional | Not Run |
-| TC-AUTH-21 | Verify email already verified | Medium | Negative | Not Run |
-| TC-AUTH-22 | Verify email invalid token | High | Security | Not Run |
-| TC-AUTH-23 | authLimiter blocks brute force | High | Security | Not Run |
+| TC-AUTH-01 | Sign up with valid data | Critical | Functional | Passed |
+| TC-AUTH-02 | Sign up sends verification email | High | Functional | Passed |
+| TC-AUTH-03 | Sign up with duplicate email | High | Negative | Passed |
+| TC-AUTH-04 | Sign up short fullname (<3) | Medium | Boundary | Passed |
+| TC-AUTH-05 | Sign up long fullname (>30) | Medium | Boundary | Passed |
+| TC-AUTH-06 | Sign up invalid email | Medium | Negative | Passed |
+| TC-AUTH-07 | Sign up short password (<8) | High | Boundary | Passed |
+| TC-AUTH-08 | Sign up with extra `role` field | High | Security | Passed |
+| TC-AUTH-09 | Sign up missing required fields | Medium | Negative | Passed |
+| TC-AUTH-10 | Sign in with valid verified account | Critical | Functional | Passed |
+| TC-AUTH-11 | Sign in sets httpOnly jwt cookie | Critical | Security | Passed |
+| TC-AUTH-12 | Sign in wrong password | High | Negative | Passed |
+| TC-AUTH-13 | Sign in unknown email | High | Negative | Passed |
+| TC-AUTH-14 | Sign in unverified account | High | Functional | Passed |
+| TC-AUTH-15 | Password never returned in response | Critical | Security | Passed |
+| TC-AUTH-16 | GET /me with valid cookie | High | Functional | Passed |
+| TC-AUTH-17 | GET /me without token | High | Authorization | Passed |
+| TC-AUTH-18 | GET /me with tampered/invalid token | High | Security | Passed |
+| TC-AUTH-19 | Sign out clears cookie | Medium | Functional | Passed |
+| TC-AUTH-20 | Verify email with valid token | Critical | Functional | Passed |
+| TC-AUTH-21 | Verify email already verified | Medium | Negative | Passed |
+| TC-AUTH-22 | Verify email invalid token | High | Security | Passed |
+| TC-AUTH-23 | authLimiter blocks brute force | High | Security | Passed |
 
 ---
 
