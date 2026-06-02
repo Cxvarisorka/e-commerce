@@ -34,6 +34,9 @@ const commentRouter = require('./routers/comment.router');
 const mongoSanitizeMiddleware = require('./middlewares/security.middleware');
 const { globalLimiter, apiLimiter } = require('./config/rateLimit.config');
 
+// Utils
+const AppError = require('./utils/AppError');
+
 // ----------------------------------------------------------------------------------------
 
 // Env init
@@ -95,6 +98,10 @@ app.use('/api/user', userRouter);
 app.use('/api/review', reviewRouter);
 app.use('/api/comment', commentRouter);
 
+// If user send request in unknown route
+app.use((req, res, next) => {
+    next(new AppError("Route not found!", 404));
+});
 
 // Error handler
 app.use(globalErrorHandler);

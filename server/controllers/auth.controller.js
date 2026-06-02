@@ -34,7 +34,11 @@ const signToken = user => {
 
 // Create account
 const signup = catchAsync(async (req, res, next) => {
-    const { fullname, email, password, role } = req.body;
+    const { fullname, email, password, role = "user" } = req.body;
+
+    if (role.toLowerCase() === "admin") {
+        return next(new AppError("You cant sign up with admin role!", 400));
+    }
 
     const user = await User.create({fullname, email, password, role});
 

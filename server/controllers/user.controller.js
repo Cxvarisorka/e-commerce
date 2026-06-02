@@ -26,6 +26,8 @@ const getUserById = catchAsync(async (req, res, next) => {
 
     if (!user) return next(new AppError("User not found", 404));
 
+    user.password = undefined;
+
     return res.json({
         status: "success",
         data: user,
